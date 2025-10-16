@@ -1,18 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function NavBar() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
-    <div className="flex items-center justify-between bg-gray-700 p-4">
+    <div className="flex items-center justify-between bg-gray-700 rounded-lg p-2">
       <nav className="flex space-x-4 font-bold">
         <Link
-          className="flex items-center text-white hover:text-yellow-400 hover:underline transition-colors duration-200"
+          className={`inline-block transform transition-transform duration-300 px-3 py-2 rounded-lg hover:bg-gray-400 
+            ${currentPath === "/" ? "text-yellow-400" : "text-white"}`}
           to="/"
         >
           <i className="fa-regular fa-map"></i>
           <span className="ml-1">Home</span>
         </Link>
+
         <Link
-          className="flex items-center text-white hover:text-yellow-400 hover:underline transition-colors duration-200"
+          className={`inline-block transform transition-transform duration-300 px-3 py-2 rounded-lg ${
+            currentPath === "/currency" ? "text-yellow-400" : "text-white"
+          } hover:bg-gray-400`}
           to="/currency"
         >
           <i className="fa-solid fa-chart-line"></i>
@@ -22,7 +29,9 @@ export default function NavBar() {
 
       <nav className="font-bold">
         <Link
-          className="flex items-center text-white hover:text-yellow-400 transition-colors duration-200"
+          className={`inline-block transform transition-transform duration-300 px-3 py-2 rounded-lg ${
+            currentPath === "/login" ? "text-yellow-400" : "text-white"
+          } hover:bg-gray-400`}
           to="/login"
         >
           <i className="fa-solid fa-circle-user"></i>
