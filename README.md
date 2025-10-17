@@ -21,12 +21,72 @@
     - Routing is the process of determining what conten to display based on the URL in the browser.
     - `SPA` Single page application, only one HTML(index.html) is loaded, routing let React dynamically swap components whem the URL changes without refreshing the page.
 
-### 20251014 - File creation
+### 20251014 - Fixing NavBar
 
 - Fixing `NavBar.jsx` to separate `<Link>` and `<Routes>` `App.jsx`
 
-### 20251015 - File creation
+### 20251015 - Adding tailwindcss & graph
 
 - Installing tailwindcss
   1. `npm install tailwindcss @tailwindcss/vite`
   2. Add the `@tailwindcss/vite` plugin to your Vite configuration.
+
+### 20251016 - Messing with layout and learning graph
+
+1. Learning ` import {useLocation} from "react-router-dom"` to add style to current page tap.
+
+### 20251017 - API
+
+1. Test an API call locally (cleint-side or Node-side)
+   Before integrate it into the Express routes, you should confirm that your request actually works and that the API responds.
+
+- Three ways to test:
+
+  1. Use a Tool (Recommended First Step):
+
+     - Postman (GUI-based)
+     - curl (command line)
+
+     ```
+     powershell
+
+     $response = curl.exe "https://poe.ninja/api/data/currencyoverview?league=Mercenaries&amp;type=Currency" | ConvertFrom-Json
+
+     $divine = $response.lines | Where-Object { $_.currencyTypeName -eq "Divine Orb" }
+
+     $divine.chaosEquivalent
+     ```
+
+     ```
+     powershell - return
+
+     % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+     100  128k    0  128k     0    0  1223k      0 --:--:-- --:--:-- --:--:-- 1285k
+     137.56
+     ```
+
+  - VS Code REST Client (extension)
+
+  2. Using Node.js/JS
+
+     ```
+     JS
+
+     import fetch from "node-fetch";
+
+     const league = "Mercenaries";
+     const url = `https://poe.ninja/api/data/currencyoverview?league=${league}&type=Currency`;
+
+     const response = await fetch(url);
+     const data = await response.json();
+
+     const divine = data.lines.find(c => c.currencyTypeName === "Divine Orb");
+     console.log(`1 Divine Orb = ${divine.chaosEquivalent} Chaos Orbs`);
+
+     ----
+     Output
+
+     1 Divine Orb = 138.33 Chaos Orbs
+     ----
+     ```
