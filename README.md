@@ -120,3 +120,7 @@ try {
   console.error("Error fetching data:", error);
 }
 ```
+
+2. Using chartGPT to generate the code to fetch the data from poe.niji & stored it via a file creation on its own.
+3. The chart will take the value from the data and adjust manually.
+4. Need code review to make it into my own knowledge.
