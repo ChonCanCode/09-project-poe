@@ -7,19 +7,22 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import divineHistory from "../poe-currency-tracker/divine-history.json";
+import NewFile from "../NewFile.json";
 
 export default function ChaosChart() {
-  const data = divineHistory.map((entry) => ({
-    name: entry.date,
-    value: entry.chaosValue,
+  // Filter for only Divine Orb entries
+  const divineData = NewFile.filter(
+    (entry) => entry.currency === "Divine Orb"
+  ).map((entry) => ({
+    name: entry.timestamp, // or another date field
+    value: entry.chaosEquivalent,
   }));
 
   return (
     <LineChart
       width={600}
       height={300}
-      data={data}
+      data={divineData}
       margin={{ top: 5, right: 20, bottom: 5, left: 5 }}
     >
       <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -27,14 +30,10 @@ export default function ChaosChart() {
       <YAxis
         width={60}
         label={{
-          value: "Chaos",
+          value: "Chaos Value",
           position: "insideLeft",
           angle: -90,
-          style: {
-            fill: "black",
-            fontSize: 14,
-            fontWeight: "bold",
-          },
+          style: { fill: "black", fontSize: 14, fontWeight: "bold" },
         }}
         stroke="black"
         tick={{ fill: "black" }}
@@ -47,7 +46,7 @@ export default function ChaosChart() {
         stroke="purple"
         strokeWidth={2}
         dot={{ r: 3 }}
-        name="Divine Value"
+        name="Divine Orb"
       />
     </LineChart>
   );

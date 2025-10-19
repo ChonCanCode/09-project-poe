@@ -1,5 +1,57 @@
 # 09-project-poe
 
+## Key takeaways:
+
+### - How to find poe.ninja **API Endpoints**?
+
+1. Open http://poe.ninja in the browser
+2. Open **Developer** Tools
+3. Go to the **Network** tab
+4. In the **Filters**, type `api` or `overview`.
+5. Browse to the section your are interested in e.g:
+   - Click on "Currency"
+   - "Unique Items"
+   - "Divination Cards"
+6. You will see request like:
+
+   ```
+   bash
+
+   https://poe.ninja/api/data/currencyoverview?league=Affliction&type=Currency
+
+   ```
+
+7. Click on one of these network entries → open the **Preview** or **Response** tab → you will see the JSON data poe.ninja uses for its tables.
+8. Right click on **Response** and **Open new tab/Pretty-print**
+9. Ctrl+F to find the specific currency and follow the order of the object in code to extract the information.
+
+   ```
+   JSON
+
+   {
+   "lines": [
+     {
+       "currencyTypeName": "Mirror of Kalandra",
+       "pay": {
+         "id": 0,
+          "id": 0,
+          "league_id": 259,
+          "pay_currency_id": 1,
+          "get_currency_id": 3,
+          "sample_time_utc": "2025-10-19T08:08:41.6238713Z",
+          "count": 42,
+          "value": 145.5,
+          "data_point_count": 1,
+          "includes_secondary": false,
+          "listing_count": 462
+       }
+     }
+   ]
+   }
+   ```
+
+10.
+
 ### Project description
 
 - A subscribable website showing currency values in POE.
@@ -95,7 +147,7 @@
 
   ```
 
-### 220251018 - Working on API
+### 20251018 - Working on API
 
 1. Finding how does it work exactly.
 
@@ -124,3 +176,45 @@ try {
 2. Using chartGPT to generate the code to fetch the data from poe.niji & stored it via a file creation on its own.
 3. The chart will take the value from the data and adjust manually.
 4. Need code review to make it into my own knowledge.
+
+### 20251019 - Code review
+
+```
+import fs from "fs";
+const league = "Mercenaries";
+const url = `https://poe.ninja/api/data/currencyoverview?league=${league}&type=Currency`;
+
+try {
+  const response = await fetch(url);
+  const data = await response.json();
+
+  const divine = data.lines.find((c) => c.currencyTypeName === "Divine Orb");
+
+  if (!divine) throw new Error("Divine Orb not found in response");
+
+  const entry = {
+    date: new Date().toISOString().split("T")[0],
+    chaosValue: divine.chaosEquivalent,
+  };
+
+  // Load existing data (if any)
+  let prices = [];
+  if (fs.existsSync("divine-history.json")) {
+    prices = JSON.parse(fs.readFileSync("divine-history.json", "utf8"));
+  }
+
+  // Append new data
+  prices.push(entry);
+
+  fs.writeFileSync("divine-history.json", JSON.stringify(prices, null, 2));
+  console.log(
+    `✅ Saved Divine Orb value: ${entry.chaosValue} Chaos (${entry.date})`
+  );
+} catch (err) {
+  console.error("❌ Error fetching Divine value:", err);
+}
+```
+
+1. `import fs from "fs";`
+
+- `fs` is a built in module in Node.js that provides API for interacting with the file system. It allwos dev to perform operactions like reading, writing, updating and deleting files and directories both synchronously and asynchronously.
