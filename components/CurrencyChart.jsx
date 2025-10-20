@@ -10,11 +10,10 @@ import {
 import NewFile from "../NewFile.json";
 
 export default function ChaosChart() {
-  // Filter for only Divine Orb entries
   const divineData = NewFile.filter(
     (entry) => entry.currency === "Divine Orb"
   ).map((entry) => ({
-    name: entry.timestamp, // or another date field
+    name: entry.timestamp,
     value: entry.chaosEquivalent,
   }));
 

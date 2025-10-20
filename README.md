@@ -218,3 +218,17 @@ try {
 1. `import fs from "fs";`
 
 - `fs` is a built in module in Node.js that provides API for interacting with the file system. It allwos dev to perform operactions like reading, writing, updating and deleting files and directories both synchronously and asynchronously.
+
+### 20251020 - `fetchAndSave.js` completed
+
+1. `fetchAndSave.js` completed
+
+- However, as there are about 500 lines for each update and about 100 different currencies. So it can get messy very quick.
+- It works tho, with two major function
+  1. It create a .JSON file what will push a new value in each day.
+  2. It create a copy of .JSON each day so it will easy to find out specific value separately if needed.
+
+2. Will start thinking of a function that will:
+1. Create a new JSON file based on the currency name.
+1. Update the currency .JSON if it already exist
+1. In the chart page it will creat a graph basic on the JSON file.
