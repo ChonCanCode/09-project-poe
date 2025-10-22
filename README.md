@@ -232,3 +232,16 @@ try {
 1. Create a new JSON file based on the currency name.
 1. Update the currency .JSON if it already exist
 1. In the chart page it will creat a graph basic on the JSON file.
+
+### 20251022
+
+1. Time stamp syntax
+
+```
+const date = new Date();
+const dateStamp = date.toISOString().split("T")[0];
+```
+
+-
+
+2. File creattion done, need code review and adding update function
