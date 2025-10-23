@@ -245,3 +245,33 @@ const dateStamp = date.toISOString().split("T")[0];
 -
 
 2. File creattion done, need code review and adding update function
+
+### 20251023
+
+```
+js
+
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+```
+
+1. the `path` module provide utilities for working with file and directory patyhs in a way that is safe and consiten across different operating system.
+
+   - **Join paths:**, `path.join("folder","file.txt")` → `"folder/file.txt"`
+   - **Resolve absolute paths:** `path.resolve("..","data")` → give you the full path to the `data` folder.
+
+2. `const __filename = fileURLToPath(import.meta.url);`
+
+   - `import.meta.url` gives you teh URL of the current module.
+   - `fileURLToPath()` converts that URL in to a regular file path.  
+     `OUTPUT c:\Users\ChonL\Documents\GitHub\09-project-poe\components\fetchCreate.js)`
+
+3. `const __dirname = path.dirname(__filename);`
+
+   - `path.dirname()` extracts the **directory portion** of a file path.
+     - dirname() it takes a file path string ass input and returns the directory path that contains that file.
+
+4. `const dataDir = path.resolve(__dirname, "../data");`
+   - Give me access to the data file by using current file as a starting point.
