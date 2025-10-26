@@ -275,3 +275,106 @@ const __dirname = path.dirname(__filename);
 
 4. `const dataDir = path.resolve(__dirname, "../data");`
    - Give me access to the data file by using current file as a starting point.
+
+### 20251026
+
+1. `await fs.mkdir(dataDir, { recursive:true });`
+
+   **What is this code?**
+
+   - This line ensures that the directory dataDir exists before your try to save any files into it.
+
+   **How this code work?**
+
+   - `fs.mkdir(path, mode, callback)`
+     - **mode:** This parameter holds the recursive boolean value. The mode option is used to set the directory permission.
+     - **callback:** This parameter holds the callback function that contains an error. Ther recursive option if set to true will not give an error messiage if the directory to be created allready exists.
+     - This creates a new directory at the path stored in `dataDir`.
+   - `{ recursive:true }`
+
+     - this option tells Node.js to create all parent directories if they dont exist.
+     - without { recursive:true }, `fs.mkdir()` would throw an error if `../data` doesn't already exist.
+
+     **When do I need this?**
+
+     - We need this code **before writing a file** to ensure the directory we are writign to actually exists when:
+       - Writing a custome file `../data`, `logs/`, or `output/`
+       - The fodler might not exist yet.
+       - Creating nested folders (e.g., `data/2025/Oct`)
+       - Building a tool that runs daily or dynamically, like currency tacker.
+
+2. `try {...} catch (err {...})`
+
+   - This is a way of handling errors in a controlled manner.
+
+     ```
+     js
+
+     try {
+        //Code that might throw an error
+        } catch (err) {
+        // Handle the error here
+        console.error('An error occurred:', err);
+        }
+     ```
+
+     Use this when:
+
+     1. Functions or opeerations that explicityly throw error.
+     2. Functions that return Promisess
+
+        - Promises don’t throw errors in the traditional sense—they reject.
+
+          - Use `await` → can catch with `try/catch`
+
+          ```
+          js
+
+          import fs from "fs/promises";
+
+          try {
+            await fs.readFile('nonexistent.txt'); // rejects if file doesn't exist
+            } catch (err) {
+            console.error('File not found:', err);
+            }
+          ```
+
+          - Use `.then()` → handle with `.catch()`
+
+          ```
+          js
+
+          import fs from "fs/promises";
+
+          fs.readFile('nonexistent.txt')
+            .catch(err => console.error(err)); // must use .catch
+          ```
+
+3. `for...of` Loop
+
+   ```
+   js
+
+   for (const item of data.lines) {
+   ...}
+
+
+   OUTPUT
+
+   [
+     { currencyTypeName: "Chaos Orb", chaosEquivalent: 1 },
+     { currencyTypeName: "Exalted Orb", chaosEquivalent: 100 }
+   ]
+
+   ```
+
+   **What is this?** - To iterates over each elemetn in the array `data.lines`.
+
+   **How does it work?** - `item` is the temporary variablel that holds the currect object in each iteration
+
+   **When do I need this?**
+
+   - Using `for...of` because my loop contains asynchronous operations (`await`) and `.map()` doesn't handle `await` properly unless comibing it with `Promise.all`
+   - When I want a simple, readable loop over iterable objects.
+   - When I dont need a new array as output, just want to perform side effects (logging, saving to a database, writign files).
+   - use `.map()` when I want to transform an array into a new array.
