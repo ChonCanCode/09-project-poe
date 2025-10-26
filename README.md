@@ -378,3 +378,18 @@ const __dirname = path.dirname(__filename);
    - When I want a simple, readable loop over iterable objects.
    - When I dont need a new array as output, just want to perform side effects (logging, saving to a database, writign files).
    - use `.map()` when I want to transform an array into a new array.
+
+4. `fs.readFile(filePath, "utf-8");`
+
+   **What is this?** - This line reads contents of a file located at `filePath` using the `fs/promises` modules, and returns the content as a string.
+
+   **How does it work?** - `fs.readFile()`, asynchronously reads the contents of a file. `filePath` acutallying reading the exact file. `utf-8`, specifies the character encoding, this tell Node.js to interpret the file as a UTF-8 encoded text file and return a string instead of a `Buffer`.
+
+   **When do I need this?** - When you read a file using `fs.readFile`, Node.js returns the content as a Buffer, a raw binary representation of the file. That sgreat for binary file (like images or PDFs), but not ideal for text file like `.json`.
+
+5. ` if (err.code !== "ENOENT") throw err;`
+   **What is this?** - A classic Node.js pattern for gravefully handling missing files while still catching real erros.
+
+   **How does it work?** - `err.code` is a property on the error object that tells you what kind of error occurred. `"ENOENT"` stands for Error No ENTry it means the file or directory does not exist.
+
+   **When do I need this?**
