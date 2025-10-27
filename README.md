@@ -393,3 +393,9 @@ const __dirname = path.dirname(__filename);
    **How does it work?** - `err.code` is a property on the error object that tells you what kind of error occurred. `"ENOENT"` stands for Error No ENTry it means the file or directory does not exist.
 
    **When do I need this?**
+
+### 20251027
+
+1. `JSON.stringify(value, replacer, space)`
+2. `const alreadyExists = existingData.some((e) => e.timestamp === timestamp) if (!alreadyExists)`
+   - So smart it declared by whether the current data is matching the date that exist in the file, if not push which works both update and create a new file by `fswriteFile()`
