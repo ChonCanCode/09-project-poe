@@ -1,52 +1,57 @@
+// ChaosCharts.jsx
+import React from "react";
 import {
   LineChart,
   Line,
   CartesianGrid,
   XAxis,
   YAxis,
-  Legend,
   Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
-import NewFile from "../NewFile.json";
 
-export default function ChaosChart() {
-  const divineData = NewFile.filter(
-    (entry) => entry.currency === "Divine Orb"
-  ).map((entry) => ({
-    name: entry.timestamp,
-    value: entry.chaosEquivalent,
-  }));
+const files = import.meta.glob("../data/*.json", { eager: true });
 
+export default function ChaosCharts() {
   return (
-    <LineChart
-      width={600}
-      height={300}
-      data={divineData}
-      margin={{ top: 5, right: 20, bottom: 5, left: 5 }}
-    >
-      <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-      <XAxis dataKey="name" stroke="black" tick={{ fill: "black" }} />
-      <YAxis
-        width={60}
-        label={{
-          value: "Chaos Value",
-          position: "insideLeft",
-          angle: -90,
-          style: { fill: "black", fontSize: 14, fontWeight: "bold" },
-        }}
-        stroke="black"
-        tick={{ fill: "black" }}
-      />
-      <Tooltip />
-      <Legend align="right" />
-      <Line
-        type="monotone"
-        dataKey="value"
-        stroke="purple"
-        strokeWidth={2}
-        dot={{ r: 3 }}
-        name="Divine Orb"
-      />
-    </LineChart>
+    <div className="flex flex-wrap gap-8 p-8 bg-gray-50">
+      {Object.entries(files).map(([path, data]) => {
+        const name = path.split("/").pop().replace(".json", "");
+
+        return (
+          <div
+            key={name}
+            className="bg-white rounded-2xl shadow p-4 w-[600px] border"
+          >
+            <h2 className="text-xl font-bold mb-2 text-center">{name}</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={data}>
+                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                <XAxis dataKey="timestamp" />
+                <YAxis
+                  label={{
+                    value: "Chaos Value",
+                    angle: -90,
+                    position: "insideLeft",
+                    style: { textAnchor: "middle" },
+                  }}
+                />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="chaosEquivalent"
+                  stroke="#8b5cf6"
+                  strokeWidth={2}
+                  dot={{ r: 3 }}
+                  name={name}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        );
+      })}
+    </div>
   );
 }
