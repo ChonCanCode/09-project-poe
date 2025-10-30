@@ -1,4 +1,3 @@
-// ChaosCharts.jsx
 import React from "react";
 import {
   LineChart,
@@ -11,7 +10,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const files = import.meta.glob("../data/*.json", { eager: true });
+const files = Object.entries(
+  import.meta.glob("../data/*.json", { eager: true })
+).map(([path, mod]) => ({
+  name: path.split("/").pop().replace(".json", ""),
+  data: mod.default,
+}));
 
 export default function ChaosCharts() {
   return (
