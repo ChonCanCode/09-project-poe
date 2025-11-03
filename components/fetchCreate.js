@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const league = "Mercenaries";
+const league = "Keepers";
 const url = `https://poe.ninja/api/data/currencyoverview?league=${league}&type=Currency`;
 
 const now = new Date();

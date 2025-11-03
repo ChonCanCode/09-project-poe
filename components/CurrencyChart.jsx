@@ -17,7 +17,11 @@ const files = Object.entries(
   data: mod.default,
 }));
 
-export default function ChaosCharts() {
+export default function ChaosCharts({ filter = "" }) {
+  const filteredFiles = files.filter(({ name }) =>
+    name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   return (
     <div className="flex flex-wrap gap-8 p-8 bg-gray-500 rounded">
       {files.map(({ name, data }) => (
