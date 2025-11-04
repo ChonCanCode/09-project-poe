@@ -1,14 +1,30 @@
-import ChasoChart from "../components/CurrencyChart";
+import { useState } from "react";
+import ChaosCharts from "../components/CurrencyChart"; // fix typo: ChasoChart → ChaosCharts
 import SearchBar from "../components/SearchBar";
 
 export default function Currency() {
+  // ✅ Add state for search term
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // ✅ Optional submit handler (you can just log for now)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Searching for:", searchTerm);
+  };
+
   return (
-    <div className="p-6min-h-screen">
+    <div className="p-6 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 mt-5">Currency</h1>
-      <SearchBar />
-      <div className=" bg-gray-600 p-4 rounded shadow">
+
+      <SearchBar
+        value={searchTerm}
+        onChange={setSearchTerm}
+        onSubmit={handleSubmit}
+      />
+
+      <div className="bg-gray-600 p-4 rounded shadow">
         <div className="flex items-center justify-center flex-col">
-          <ChasoChart />
+          <ChaosCharts filter={searchTerm} />
         </div>
       </div>
     </div>

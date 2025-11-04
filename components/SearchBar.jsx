@@ -1,9 +1,11 @@
-export default function SearchBar({ value, onChange }) {
+export default function SearchBar({ value, onChange, onSubmit }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit?.(); // call parent handler if provided
+  };
+
   return (
-    <form
-      onSubmit={(e) => e.preventDefault()}
-      className="mb-4 flex items-center gap-2"
-    >
+    <form onSubmit={handleSubmit} className="mb-4 flex items-center gap-2">
       <input
         className="border border-gray-300 rounded px-2 py-1 w-64"
         type="text"
@@ -13,7 +15,7 @@ export default function SearchBar({ value, onChange }) {
       />
       <button
         type="submit"
-        className="border border-gray-300 px-3 py-1 rounded bg-gray-100 hover:bg-gray-200"
+        className="border border-gray-300 px-3 py-1 rounded hover:bg-gray-500 cursor-pointer"
       >
         Search
       </button>
