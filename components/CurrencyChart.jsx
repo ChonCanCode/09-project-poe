@@ -1,4 +1,3 @@
-// ChaosCharts.jsx
 import React from "react";
 import {
   LineChart,
@@ -24,16 +23,16 @@ export default function ChaosCharts({ filter = "" }) {
   );
 
   return (
-    <div className="flex flex-wrap gap-8 p-8 bg-gray-50">
-      {Object.entries(files).map(([path, data]) => {
-        const name = path.split("/").pop().replace(".json", "");
-
-        return (
+    <div className="flex flex-wrap gap-8 p-8 bg-gray-500 rounded">
+      {filteredFiles.length > 0 ? (
+        filteredFiles.map(({ name, data }) => (
           <div
             key={name}
             className="bg-white rounded-2xl shadow p-4 w-[600px] border"
           >
-            <h2 className="text-xl font-bold mb-2 text-center">{name}</h2>
+            <h2 className="text-purple-900 font-bold text-xl mb-2 text-center">
+              {name}
+            </h2>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={data}>
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -59,8 +58,12 @@ export default function ChaosCharts({ filter = "" }) {
               </LineChart>
             </ResponsiveContainer>
           </div>
-        );
-      })}
+        ))
+      ) : (
+        <p className="text-white text-center w-full">
+          No matching currencies found.
+        </p>
+      )}
     </div>
   );
 }

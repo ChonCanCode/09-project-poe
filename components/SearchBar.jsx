@@ -1,7 +1,7 @@
 export default function SearchBar({ value, onChange, onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit?.(); // call parent handler if provided
+    onSubmit?.();
   };
 
   return (
