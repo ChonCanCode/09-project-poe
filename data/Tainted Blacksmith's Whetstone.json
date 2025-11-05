@@ -1,14 +1,10 @@
 [
   {
-    "timestamp": "2025-10-22",
-    "chaosEquivalent": 1.33
+    "timestamp": "2025-11-03",
+    "chaosEquivalent": 3
   },
   {
-    "timestamp": "2025-10-27",
-    "chaosEquivalent": 1.67
-  },
-  {
-    "timestamp": "2025-10-28",
-    "chaosEquivalent": 1.63
+    "timestamp": "2025-11-04",
+    "chaosEquivalent": 2.45
   }
 ]
