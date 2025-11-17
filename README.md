@@ -402,3 +402,8 @@ const __dirname = path.dirname(__filename);
 
 ### 20251108
 1. Trying to use steam deck to code.
+
+### 20251117
+Code review
+1. `currency.jsx`
+  - The purpose of this page is to serve as a parent component of two child components which are `ChaosCharts` and `SearchBar`.
